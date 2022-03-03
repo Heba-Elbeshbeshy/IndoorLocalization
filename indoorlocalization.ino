@@ -6,14 +6,9 @@
 
 #define ssid "STUDBME2"
 #define pass "BME2Stud"
-//#define ssid "WE_E087C"
-//#define password "m4305086"
 
-//char ssid[] = "WE_E087C";
-//char pass[] = "m4305086";
-
-//String saved_networks[] = {"StudBME1", "STUDBME2", "SBME_STAFF3", "SBME_STAFF", "CUFE", "RehabLab", "lab001", "CMP_LAB1"};
-String saved_networks[] = {"ahmed", "Imad", "Vodafone", "hp280", "OrangeDSL-BrainsOut", "Alwakiel", "mostafarefat", "Heba"};
+String saved_networks[] = {"StudBME1", "STUDBME2", "SBME_STAFF3", "SBME_STAFF", "CUFE", "RehabLab", "lab001", "CMP_LAB1"};
+//String saved_networks[] = {"ahmed", "Imad", "Vodafone", "hp280", "OrangeDSL-BrainsOut", "Alwakiel", "mostafarefat", "Heba"};
 String scanned_ssids[8];
 int rssi_values[8];
 
@@ -33,25 +28,26 @@ void setup()
 {
   Serial.begin(9600);
   Serial.println();
-//  connect_to_WiFi();
+  connect_to_WiFi();
 }
  
 void loop(){
     scan_networks();
-    delay(10000);  //Send a request every 30 seconds
-    Serial.print("Data,"); 
-//    save_values();
+    delay(10000);  //Send a request every 10 seconds
+    Serial.print("Data: "); 
+    save_values();
 }
  
 //function for scanning networks and conncting to one of them
 void connect_to_WiFi() {
   
-   WiFi.begin(ssid, pass); 
+   WiFi.begin(ssid, pass);
+   Serial.println(); 
    Serial.println("connecting");
    
    while (WiFi.status() != WL_CONNECTED)
    {
-    Serial.print("heba");
+    Serial.print("..");
     delay(500); 
    }
     Serial.println();
@@ -134,19 +130,14 @@ void postreq (int arr[])
      WiFiClient client;
      HTTPClient http;
      
-    http.begin(client,"http://toto3.pythonanywhere.com/test/");   //Specify request destination
+    http.begin(client,"http://toto3.pythonanywhere.com/Post_Readings/");   //Specify request destination
     http.addHeader("Content-Type",  "application/json");  //Specify content-type header
 
       char json_str[100];
       sprintf(json_str, "{\"Readings\":[%d,%d,%d,%d,%d,%d,%d,%d]}", rssi_values[0], rssi_values[1], rssi_values[2], rssi_values[3],
                                                      rssi_values[4], rssi_values[5], rssi_values[6], rssi_values[7]);
       int httpCode = http.POST(json_str);
-//   StaticJsonBuffer<200> jsonBuffer;
-//   JsonObject& values = jsonBuffer.createObject();
-
-//    char json_str[100]; 
-//    values.prettyPrintTo(json_str, sizeof(json_str));
-//    int httpCode = http.POST(json_str);       //Send the request
+      Serial.println("in post fun");
 //    
     if(httpCode > 0){
       if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
