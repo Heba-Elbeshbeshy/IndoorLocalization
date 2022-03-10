@@ -7,17 +7,15 @@
 #define ssid "STUDBME2"
 #define pass "BME2Stud"
 
-String saved_networks[] = {"StudBME1", "STUDBME2", "SBME_STAFF3", "SBME_STAFF", "CUFE", "RehabLab", "lab001", "CMP_LAB1"};
-//String saved_networks[] = {"ahmed", "Imad", "Vodafone", "hp280", "OrangeDSL-BrainsOut", "Alwakiel", "mostafarefat", "Heba"};
-String scanned_ssids[8];
-int rssi_values[8];
+String saved_networks[] = { "STUDBME2","aya2","aya1","badra22", "CMP_LAB2", "STUDBME1","CMP_LAB1"};
+//String saved_networks[] = {"StudBME1", "STUDBME2", "SBME_STAFF3", "SBME_STAFF", "CUFE", "RehabLab", "lab001", "CMP_LAB1"};
+String scanned_ssids[7];
+int rssi_values[7];
 
 int w_len = sizeof(saved_networks)/sizeof(saved_networks[0]);
 int s_len = sizeof(scanned_ssids)/sizeof(scanned_ssids[0]);
 int s_index = 0;          // index for scanned_ssids
 int w_index = 0;          // index for saved_networks
-int n = 0;                
-int numberOfNetworks = 0; // number of scanned networks
 
 void connect_to_WiFi();
 void scan_networks();
@@ -134,8 +132,8 @@ void postreq (int arr[])
     http.addHeader("Content-Type",  "application/json");  //Specify content-type header
 
       char json_str[100];
-      sprintf(json_str, "{\"Readings\":[%d,%d,%d,%d,%d,%d,%d,%d]}", rssi_values[0], rssi_values[1], rssi_values[2], rssi_values[3],
-                                                     rssi_values[4], rssi_values[5], rssi_values[6], rssi_values[7]);
+      sprintf(json_str, "{\"Readings\":[%d,%d,%d,%d,%d,%d,%d]}", rssi_values[0], rssi_values[1], rssi_values[2], rssi_values[3],rssi_values[4]
+                                                     , rssi_values[5], rssi_values[6]);
       int httpCode = http.POST(json_str);
       Serial.println("in post fun");
 //    
